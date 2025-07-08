@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
-import Logo from "@/public/logo.png";
+import Logo from "@/public/logo1.png";
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
   return (
@@ -19,7 +19,7 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
 
       <div className='flex w-full max-w-sm flex-col gap-6'>
         <div className='flex items-center gap-2 self-center font-medium'>
-          <Image src={Logo} alt='logo' width={40} height={40} />
+          <Image src={Logo} alt='logo' width={64} height={64} />
           OMM®
         </div>
 
