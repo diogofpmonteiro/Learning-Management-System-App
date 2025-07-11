@@ -40,9 +40,7 @@ export function NavUser({}) {
                   src={session?.user.image ?? `https://avatar.vercel.sh/${session?.user.email}`}
                   alt={session?.user.name}
                 />
-                <AvatarFallback className='rounded-lg'>
-                  {session?.user.name.charAt(0).toUpperCase() || session?.user.email.charAt(0).toUpperCase()}
-                </AvatarFallback>
+                <AvatarFallback className='rounded-lg'>{session?.user.name.charAt(0).toUpperCase()}</AvatarFallback>
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
                 <span className='truncate font-medium'>{session?.user.name || session?.user.email.split("@")[0]}</span>

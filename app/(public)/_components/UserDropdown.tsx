@@ -29,12 +29,12 @@ export default function UserDropdown({ name, email, image }: IAppProps) {
         <Button variant='ghost' className='h-auto p-0 hover:bg-transparent'>
           <Avatar>
             <AvatarImage src={image} alt='Profile image' />
-            <AvatarFallback>{name[0].toUpperCase()}</AvatarFallback>
+            <AvatarFallback>{name[0].toUpperCase() || email[0].toUpperCase()}</AvatarFallback>
           </Avatar>
           <ChevronDownIcon size={16} className='opacity-60' aria-hidden='true' />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align='end' className='max-w-64'>
+      <DropdownMenuContent align='end' className='min-w-48'>
         <DropdownMenuLabel className='flex min-w-0 flex-col'>
           <span className='text-foreground truncate text-sm font-medium'>{name}</span>
           <span className='text-muted-foreground truncate text-xs font-normal'>{email}</span>

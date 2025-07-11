@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import slugify from "slugify";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import RichTextEditor from "@/components/rich-text-editor/Editor";
 
 const CreateCoursePage = () => {
   const courseForm = useForm<CourseSchemaType>({
@@ -121,7 +122,7 @@ const CreateCoursePage = () => {
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Textarea placeholder='Course description' className='min-h-[100px]' {...field} />
+                      <RichTextEditor field={field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
