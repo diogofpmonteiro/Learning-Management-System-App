@@ -31,9 +31,9 @@ export async function CreateCourse(data: CourseSchemaType): Promise<ApiResponse>
     if (decision.isDenied()) {
       if (decision.reason.isRateLimit()) {
         return { message: "You've been block due to rate limiting", status: "error" };
+      } else {
+        return { message: "Decision denied", status: "error" };
       }
-    } else {
-      return { message: "Decision denied", status: "error" };
     }
 
     const validation = courseSchema.safeParse(data);
