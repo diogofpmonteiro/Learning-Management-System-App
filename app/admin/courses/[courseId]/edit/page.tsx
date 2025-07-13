@@ -2,6 +2,7 @@ import { adminGetCourse } from "@/app/data/admin/admin-get-course";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import EditCourseForm from "./_components/EditCourseForm";
+import CourseStructure from "./_components/CourseStructure";
 
 type Params = Promise<{ courseId: string }>;
 
@@ -30,6 +31,19 @@ const EditRoute = async ({ params }: { params: Params }) => {
 
             <CardContent>
               <EditCourseForm data={data} />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value='course-structure'>
+          <Card>
+            <CardHeader>
+              <CardTitle>Course Structure</CardTitle>
+              <CardDescription>Here you can update your course structure</CardDescription>
+            </CardHeader>
+
+            <CardContent>
+              <CourseStructure />
             </CardContent>
           </Card>
         </TabsContent>
