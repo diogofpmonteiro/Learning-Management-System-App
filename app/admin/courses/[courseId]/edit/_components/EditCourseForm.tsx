@@ -16,7 +16,7 @@ import { useTransition } from "react";
 import { tryCatch } from "@/hooks/try-catch";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { EditCourse } from "../actions";
+import { editCourse } from "../actions";
 import { AdminCourseSingularType } from "@/app/data/admin/admin-get-course";
 
 interface IEditCourseFormProps {
@@ -45,7 +45,7 @@ const EditCourseForm = ({ data }: IEditCourseFormProps) => {
 
   const onSubmit = (values: CourseSchemaType) => {
     startTransition(async () => {
-      const { result, error } = await tryCatch(EditCourse(values, data.id));
+      const { result, error } = await tryCatch(editCourse(values, data.id));
 
       if (error) {
         toast.error("An unexpected error occurred. Please try again.");

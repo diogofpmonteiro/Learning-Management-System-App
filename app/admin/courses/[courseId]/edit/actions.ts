@@ -6,6 +6,7 @@ import { ApiResponse } from "@/lib/types";
 import { courseSchema, CourseSchemaType } from "@/lib/zodSchema";
 import arcjet, { detectBot, fixedWindow } from "@/lib/arcjet";
 import { request } from "@arcjet/next";
+import { revalidatePath } from "next/cache";
 
 const aj = arcjet
   .withRule(
@@ -22,7 +23,7 @@ const aj = arcjet
     })
   );
 
-export async function EditCourse(data: CourseSchemaType, courseId: string): Promise<ApiResponse> {
+export async function editCourse(data: CourseSchemaType, courseId: string): Promise<ApiResponse> {
   const session = await requireAdmin();
 
   try {
@@ -59,6 +60,90 @@ export async function EditCourse(data: CourseSchemaType, courseId: string): Prom
     return {
       status: "error",
       message: "Failed to edit course",
+    };
+  }
+}
+
+export async function reorderLessons(
+  chapterId: string,
+  lessons: { id: string; position: number }[],
+  courseId: string
+): Promise<ApiResponse> {
+  await requireAdmin();
+
+  try {
+    if (!lessons || lessons.length === 0) {
+      return {
+        status: "error",
+        message: "No lessons provided",
+      };
+    }
+
+    const updates = lessons.map((lesson) =>
+      prisma.lesson.update({
+        where: {
+          id: lesson.id,
+          chapterId,
+        },
+        data: {
+          position: lesson.position,
+        },
+      })
+    );
+
+    // bundles update operations
+    await prisma.$transaction(updates);
+
+    revalidatePath(`/admin/courses/${courseId}/edit`);
+
+    return {
+      status: "success",
+      message: "Lessons updated successfully",
+    };
+  } catch (error) {
+    return {
+      status: "error",
+      message: "Failed to reorder lessons",
+    };
+  }
+}
+
+export async function reorderChapters(
+  courseId: string,
+  chapters: { id: string; position: number }[]
+): Promise<ApiResponse> {
+  await requireAdmin();
+
+  try {
+    if (!chapters || chapters.length === 0) {
+      return {
+        status: "error",
+        message: "No chapters provided",
+      };
+    }
+
+    const updates = chapters.map((chapter) =>
+      prisma.chapter.update({
+        where: { id: chapter.id, courseId },
+        data: {
+          position: chapter.position,
+        },
+      })
+    );
+
+    // bundles update operations
+    await prisma.$transaction(updates);
+
+    revalidatePath(`/admin/courses/${courseId}/edit`);
+
+    return {
+      status: "success",
+      message: "Chapter updated succesfully",
+    };
+  } catch (error) {
+    return {
+      status: "error",
+      message: "Failed to update chapters",
     };
   }
 }

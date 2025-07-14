@@ -21,7 +21,7 @@ const aj = arcjet
     })
   );
 
-export async function CreateCourse(data: CourseSchemaType): Promise<ApiResponse> {
+export async function createCourse(data: CourseSchemaType): Promise<ApiResponse> {
   const session = await requireAdmin();
 
   try {
