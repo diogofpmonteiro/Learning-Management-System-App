@@ -43,7 +43,7 @@ const EditRoute = async ({ params }: { params: Params }) => {
             </CardHeader>
 
             <CardContent>
-              <CourseStructure />
+              <CourseStructure data={data} />
             </CardContent>
           </Card>
         </TabsContent>

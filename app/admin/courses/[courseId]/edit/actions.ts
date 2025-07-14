@@ -26,16 +26,16 @@ export async function EditCourse(data: CourseSchemaType, courseId: string): Prom
   const session = await requireAdmin();
 
   try {
-    // const req = await request();
-    // const decision = await aj.protect(req, { fingerprint: session.user.id });
+    const req = await request();
+    const decision = await aj.protect(req, { fingerprint: session.user.id });
 
-    // if (decision.isDenied()) {
-    //   if (decision.reason.isRateLimit()) {
-    //     return { message: "You've been block due to rate limiting", status: "error" };
-    //   } else {
-    //     return { message: "Decision denied", status: "error" };
-    //   }
-    // }
+    if (decision.isDenied()) {
+      if (decision.reason.isRateLimit()) {
+        return { message: "You've been block due to rate limiting", status: "error" };
+      } else {
+        return { message: "Decision denied", status: "error" };
+      }
+    }
 
     const result = courseSchema.safeParse(data);
 
