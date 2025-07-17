@@ -7,12 +7,16 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { tryCatch } from "@/hooks/try-catch";
 import { lessonSchema, LessonSchemaType } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { updateLesson } from "../actions";
+import { useTransition } from "react";
+import { toast } from "sonner";
 
 interface ILessonFormProps {
   data: AdminLessonType;
@@ -21,6 +25,8 @@ interface ILessonFormProps {
 }
 
 const LessonForm = ({ data, chapterId, courseId }: ILessonFormProps) => {
+  const [isPending, startTransition] = useTransition();
+
   const lessonForm = useForm<LessonSchemaType>({
     resolver: zodResolver(lessonSchema),
     defaultValues: {
@@ -32,6 +38,23 @@ const LessonForm = ({ data, chapterId, courseId }: ILessonFormProps) => {
       videoKey: data.videoKey ?? undefined,
     },
   });
+
+  const onSubmit = async (values: LessonSchemaType) => {
+    startTransition(async () => {
+      const { result, error } = await tryCatch(updateLesson(values, data.id));
+
+      if (error) {
+        toast.error("An unexpected error occurred. Please try again.");
+        return;
+      }
+
+      if (result.status === "success") {
+        toast.success(result.message);
+      } else if (result.status === "error") {
+        toast.error(result.message);
+      }
+    });
+  };
 
   return (
     <div>
@@ -52,7 +75,7 @@ const LessonForm = ({ data, chapterId, courseId }: ILessonFormProps) => {
 
         <CardContent>
           <Form {...lessonForm}>
-            <form className='space-y-6'>
+            <form className='space-y-6' onSubmit={lessonForm.handleSubmit(onSubmit)}>
               <FormField
                 control={lessonForm.control}
                 name='name'
@@ -60,7 +83,7 @@ const LessonForm = ({ data, chapterId, courseId }: ILessonFormProps) => {
                   <FormItem>
                     <FormLabel>Lesson name</FormLabel>
                     <FormControl>
-                      <Input placeholder='Lesson name' {...field} />
+                      <Input placeholder='Lesson name' {...field} autoComplete='off' />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -109,7 +132,9 @@ const LessonForm = ({ data, chapterId, courseId }: ILessonFormProps) => {
                 )}
               />
 
-              <Button type='submit'>Save Lesson</Button>
+              <Button type='submit' disabled={isPending}>
+                {isPending ? "Saving..." : "Save Lesson"}
+              </Button>
             </form>
           </Form>
         </CardContent>

@@ -22,7 +22,7 @@ const RichTextEditor = ({ field }: { field: any }) => {
     onUpdate: ({ editor }) => {
       field.onChange(JSON.stringify(editor.getJSON()));
     },
-    content: field.value ? JSON.parse(field.value) : "<p>Create a course description</p>",
+    content: field.value ? JSON.parse(field.value) : "<p>Create a description</p>",
   });
 
   return (

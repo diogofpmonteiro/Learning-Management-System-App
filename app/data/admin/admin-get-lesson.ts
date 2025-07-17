@@ -10,6 +10,7 @@ export async function adminGetLesson(lessonId: string) {
       id: lessonId,
     },
     select: {
+      id: true,
       title: true,
       description: true,
       position: true,

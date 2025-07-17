@@ -81,7 +81,7 @@ const NewLessonModal = ({ courseId, chapterId }: { courseId: string; chapterId: 
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder='Lesson name' {...field} />
+                    <Input placeholder='Lesson name' {...field} autoComplete='off' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

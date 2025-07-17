@@ -258,7 +258,7 @@ const Uploader = ({ value, onChange, fileTypeAccepted }: IUploaderProps) => {
     accept: fileTypeAccepted === "video" ? { "video/*": [] } : { "image/*": [] },
     maxFiles: 1,
     multiple: false,
-    maxSize: 5 * 1024 * 1024, // 5MB
+    maxSize: fileTypeAccepted === "image" ? 5 * 1024 * 1024 : 5000 * 1024 * 1024, // 5MB for image, 5GB for video
     disabled: fileState.isUploading || !!fileState.objectUrl,
   });
 

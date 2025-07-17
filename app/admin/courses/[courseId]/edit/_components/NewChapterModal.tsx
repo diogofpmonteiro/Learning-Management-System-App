@@ -80,7 +80,7 @@ const NewChapterModal = ({ courseId }: { courseId: string }) => {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder='Chapter name' {...field} />
+                    <Input placeholder='Chapter name' {...field} autoComplete='off' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

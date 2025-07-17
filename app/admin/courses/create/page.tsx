@@ -90,7 +90,7 @@ const CreateCoursePage = () => {
                   <FormItem>
                     <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input placeholder='Course title' {...field} />
+                      <Input placeholder='Course title' {...field} autoComplete='off' />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -105,7 +105,7 @@ const CreateCoursePage = () => {
                     <FormItem className='w-full'>
                       <FormLabel>Slug</FormLabel>
                       <FormControl>
-                        <Input placeholder='Course slug' {...field} />
+                        <Input placeholder='Course slug' {...field} autoComplete='off' />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
