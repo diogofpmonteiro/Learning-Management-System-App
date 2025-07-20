@@ -17,7 +17,6 @@ const VerifyRequest = () => {
   const isOtpCompleted = otp.length === 6;
 
   const verifyOtp = () => {
-    console.log("start");
     startTransition(async () => {
       await authClient.signIn.emailOtp({
         email,
